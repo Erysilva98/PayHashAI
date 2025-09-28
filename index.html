@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bemobi App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <span class="time">09:45</span>
+        <div class="status-icons">
+            <span class="signal">📶</span>
+            <span class="wifi">📶</span>
+            <span class="battery">🔋</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Notification Modal -->
+        <div id="notification-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="notification-header">
+                    <span class="notification-icon">🔔</span>
+                    <h3>Nova Notificação</h3>
+                </div>
+                <div id="notification-body"></div>
+                <div class="notification-actions">
+                    <button class="btn btn--secondary" onclick="dismissNotification()">Depois</button>
+                    <button class="btn btn--primary" onclick="handleNotification()">Ver Agora</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coin Animation -->
+        <div id="coin-animation" class="coin-rain hidden">
+            <div class="coin">🪙</div>
+            <div class="coin">🪙</div>
+            <div class="coin">🪙</div>
+            <div class="coin">🪙</div>
+            <div class="coin">🪙</div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen active">
+            <div class="screen-header">
+                <div class="user-info">
+                    <div class="user-avatar">👩‍💼</div>
+                    <div class="user-details">
+                        <h3>Oi, Maria!</h3>
+                        <p>Domingo, 28 de Setembro</p>
+                    </div>
+                </div>
+                <div class="notification-bell" onclick="showPendingNotification()">
+                    <span class="bell-icon">🔔</span>
+                    <span class="notification-badge">2</span>
+                </div>
+            </div>
+
+            <div class="balance-card">
+                <div class="balance-header">
+                    <h2>Saldo Bemobi Coins</h2>
+                    <button class="info-btn">ℹ️</button>
+                </div>
+                <div class="balance-amount">
+                    <span class="bc-amount">1.247 BC</span>
+                    <span class="real-amount">= R$ 12,47</span>
+                </div>
+                <div class="balance-trend">
+                    <span class="trend-up">↗️ +170 BC esta semana</span>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Ações Rápidas</h3>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="showRedeemStore()">
+                        <div class="action-icon">🎁</div>
+                        <span>Resgatar</span>
+                    </div>
+                    <div class="action-card" onclick="showWallet()">
+                        <div class="action-icon">💰</div>
+                        <span>Carteira</span>
+                    </div>
+                    <div class="action-card" onclick="showProfile()">
+                        <div class="action-icon">🔐</div>
+                        <span>Segurança</span>
+                    </div>
+                    <div class="action-card" onclick="showChat('finance')">
+                        <div class="action-icon">📊</div>
+                        <span>Economia</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="goals-section">
+                <h3>Metas do Mês</h3>
+                <div class="goal-card">
+                    <div class="goal-info">
+                        <span class="goal-title">Economia Mensal</span>
+                        <span class="goal-reward">+200 BC</span>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                        <span class="progress-text">R$ 450 de R$ 500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h3>Atividade Recente</h3>
+                <div class="activity-list">
+                    <div class="activity-item gain">
+                        <div class="activity-icon">✅</div>
+                        <div class="activity-details">
+                            <span class="activity-title">Transação confirmada</span>
+                            <span class="activity-time">Hoje, 09:30</span>
+                        </div>
+                        <span class="activity-amount">+20 BC</span>
+                    </div>
+                    <div class="activity-item gain">
+                        <div class="activity-icon">🎯</div>
+                        <div class="activity-details">
+                            <span class="activity-title">Meta de economia atingida</span>
+                            <span class="activity-time">Ontem, 08:45</span>
+                        </div>
+                        <span class="activity-amount">+200 BC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chat-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showDashboard()">← Voltar</button>
+                <div class="chat-info">
+                    <div class="agent-avatar" id="agent-avatar">🤖</div>
+                    <div class="agent-details">
+                        <h3 id="agent-name">Bemobi Sec+</h3>
+                        <span class="agent-status">● Online</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages"></div>
+            
+            <div class="chat-actions" id="chat-actions">
+                <button class="btn btn--outline" onclick="sendChatResponse('no')">❌ Não fui eu</button>
+                <button class="btn btn--primary" onclick="sendChatResponse('yes')">✅ Confirmar</button>
+            </div>
+        </div>
+
+        <!-- Wallet Screen -->
+        <div id="wallet-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showDashboard()">← Voltar</button>
+                <h2>Minha Carteira</h2>
+            </div>
+
+            <div class="wallet-balance">
+                <div class="balance-display">
+                    <span class="current-balance">1.247 BC</span>
+                    <span class="real-equivalent">R$ 12,47 disponível</span>
+                </div>
+            </div>
+
+            <div class="wallet-filters">
+                <button class="filter-btn active" onclick="filterTransactions('all')">Todas</button>
+                <button class="filter-btn" onclick="filterTransactions('gain')">Ganhos</button>
+                <button class="filter-btn" onclick="filterTransactions('redeem')">Resgates</button>
+            </div>
+
+            <div class="transaction-list" id="transaction-list"></div>
+        </div>
+
+        <!-- Redeem Store Screen -->
+        <div id="store-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showDashboard()">← Voltar</button>
+                <h2>Loja de Resgates</h2>
+            </div>
+
+            <div class="store-categories">
+                <button class="category-btn active" onclick="filterStore('all')">Todas</button>
+                <button class="category-btn" onclick="filterStore('bills')">Contas</button>
+                <button class="category-btn" onclick="filterStore('partners')">Parceiros</button>
+                <button class="category-btn" onclick="filterStore('premium')">Premium</button>
+            </div>
+
+            <div class="store-items" id="store-items"></div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="profile-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showDashboard()">← Voltar</button>
+                <h2>Perfil e Segurança</h2>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">👩‍💼</div>
+                    <div class="profile-info">
+                        <h3>Maria Silva</h3>
+                        <p>Membro desde Janeiro 2024</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="security-section">
+                <h3>Configurações de Segurança</h3>
+                <div class="security-item" onclick="toggle2FA()">
+                    <div class="security-info">
+                        <span class="security-title">Autenticação em 2 Fatores</span>
+                        <span class="security-subtitle">Protege sua conta com verificação extra</span>
+                        <span class="security-reward">🎁 +300 BC ao ativar</span>
+                    </div>
+                    <div class="security-toggle" id="twofa-toggle">
+                        <span class="toggle-status">Inativo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="goals-overview">
+                <h3>Suas Metas</h3>
+                <div id="goals-list"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="showDashboard()">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Início</span>
+            </button>
+            <button class="nav-btn" onclick="showWallet()">
+                <span class="nav-icon">💰</span>
+                <span class="nav-label">Carteira</span>
+            </button>
+            <button class="nav-btn" onclick="showRedeemStore()">
+                <span class="nav-icon">🎁</span>
+                <span class="nav-label">Resgatar</span>
+            </button>
+            <button class="nav-btn" onclick="showChat('sec')">
+                <span class="nav-icon">💬</span>
+                <span class="nav-label">Chat</span>
+            </button>
+            <button class="nav-btn" onclick="showProfile()">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Perfil</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
